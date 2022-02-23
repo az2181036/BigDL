@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers
@@ -53,6 +55,7 @@ model = Sequential([
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
-
-model.fit(train_ds, epochs=3, validation_data=val_ds, nprocs=2)
+st = time.time()
+model.fit(train_ds, epochs=3, validation_data=val_ds)
+print(time.time()-st)
 model.evaluate(val_ds)

@@ -70,6 +70,7 @@ class TrainingUtils:
             msg = "x must be a tf.data.Dataset for multi-process training"
             assert isinstance(x, (tf.compat.v1.data.Dataset, tf.data.Dataset)), msg
 
+            from bigdl.nano.common.multiprocessing.multiprocs_backend import MultiprocessingBackend
             from bigdl.nano.common.multiprocessing.ray_backend import RayBackend
 
             history = distributed_train_keras(RayBackend(),

@@ -13,10 +13,6 @@
 # limitations under the License.
 # ==============================================================================
 import os
-
-os.system("pip install ray[default]")
-os.system("pip install -U intel_tensorflow")
-
 import pathlib
 from tempfile import TemporaryDirectory
 
@@ -24,8 +20,8 @@ import tensorflow as tf
 from tensorflow.keras import layers
 from bigdl.nano.tf.keras import Sequential
 
-URI = os.environ['FTP_URI']
-dataset_url = URI + "/BigDL-data/flower_photos.tar.gz"
+
+dataset_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz"
 data_dir = tf.keras.utils.get_file('flower_photos', origin=dataset_url, untar=True)
 data_dir = pathlib.Path(data_dir)
 
@@ -71,8 +67,8 @@ model = Sequential([
 ])
 
 model.compile(optimizer='adam',
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-              metrics=['accuracy'])
+                  loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+                  metrics=['accuracy'])
 
 
 def test_fit_function():
@@ -89,5 +85,5 @@ def test_fit_function():
         # Case 2: Add multiple processing argument
         history_multiprocssing = model.fit(train_ds, epochs=3,
                                            validation_data=val_ds, nprocs=2)
-        assert 1 - (history_default.history['loss'][-1]
-                    / history_multiprocssing.history['loss'][-1]) <= 0.1
+        assert 1 - (history_default.history['loss']
+                    / history_multiprocssing.history['loss']) <= 0.1
