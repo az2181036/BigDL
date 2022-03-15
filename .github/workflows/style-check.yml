@@ -28,7 +28,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: pip install pycodestyle
+        run: pip install pycodestyle, mypy
       
       # Runs a single command using the runners shell
       - name: License checking
